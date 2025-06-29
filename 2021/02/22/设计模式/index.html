@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>设计模式 - The Bit Garden</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="The Bit Garden"><meta name="msapplication-TileImage" content="/img/bitg.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="The Bit Garden"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="设计模式1. 设计模式概述23种设计模式可以分为三大类：  创建型模式5种 结构型模式7种 行为型模式11种  软件设计原则  开闭原则：对扩展开放，对修改关系。接口和抽象类，增加派生类即可。  里氏代换原则：子类继承父类的方法，尽量不要改变父类方法的功能。 依赖倒转原则：高层模块不依赖于低层模块，两者应该依赖其抽象，抽象不应该依赖细节，细节应该依抽象。具体实现可以参考泛型的思想。 接口隔离原则："><meta property="og:type" content="blog"><meta property="og:title" content="设计模式"><meta property="og:url" content="http://taofei.tech/2021/02/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><meta property="og:site_name" content="The Bit Garden"><meta property="og:description" content="设计模式1. 设计模式概述23种设计模式可以分为三大类：  创建型模式5种 结构型模式7种 行为型模式11种  软件设计原则  开闭原则：对扩展开放，对修改关系。接口和抽象类，增加派生类即可。  里氏代换原则：子类继承父类的方法，尽量不要改变父类方法的功能。 依赖倒转原则：高层模块不依赖于低层模块，两者应该依赖其抽象，抽象不应该依赖细节，细节应该依抽象。具体实现可以参考泛型的思想。 接口隔离原则："><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://taofei.tech/image/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png"><meta property="og:image" content="http://taofei.tech/image/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png"><meta property="og:image" content="http://taofei.tech/image/ArrayList.png"><meta property="article:published_time" content="2021-02-22T14:23:11.000Z"><meta property="article:modified_time" content="2025-06-29T19:11:34.281Z"><meta property="article:author" content="TaoFei"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://taofei.tech/image/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://taofei.tech/2021/02/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"},"headline":"设计模式","image":["http://taofei.tech/image/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png","http://taofei.tech/image/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png","http://taofei.tech/image/ArrayList.png"],"datePublished":"2021-02-22T14:23:11.000Z","dateModified":"2025-06-29T19:11:34.281Z","author":{"@type":"Person","name":"TaoFei"},"publisher":{"@type":"Organization","name":"The Bit Garden","logo":{"@type":"ImageObject","url":"http://taofei.tech/img/bitg.png"}},"description":"设计模式1. 设计模式概述23种设计模式可以分为三大类：  创建型模式5种 结构型模式7种 行为型模式11种  软件设计原则  开闭原则：对扩展开放，对修改关系。接口和抽象类，增加派生类即可。  里氏代换原则：子类继承父类的方法，尽量不要改变父类方法的功能。 依赖倒转原则：高层模块不依赖于低层模块，两者应该依赖其抽象，抽象不应该依赖细节，细节应该依抽象。具体实现可以参考泛型的思想。 接口隔离原则："}</script><link rel="canonical" href="http://taofei.tech/2021/02/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><link rel="icon" href="/img/bitg.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/bitg.png" alt="The Bit Garden" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-02-22T14:23:11.000Z" title="2021/2/22 22:23:11">2021-02-22</time>发表</span><span class="level-item"><time dateTime="2025-06-29T19:11:34.281Z" title="2025/6/30 03:11:34">2025-06-30</time>更新</span><span class="level-item">32 分钟读完 (大约4736个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">设计模式</h1><div class="content"><h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a><strong>设计模式</strong></h1><h2 id="1-设计模式概述"><a href="#1-设计模式概述" class="headerlink" title="1. 设计模式概述"></a><strong>1. 设计模式概述</strong></h2><p><strong>23种设计模式</strong>可以分为<strong>三大类</strong>：</p>
+<ul>
+<li><code>创建型模式</code>5种</li>
+<li><code>结构型模式</code>7种</li>
+<li><code>行为型模式</code>11种</li>
+</ul>
+<p><strong>软件设计原则</strong></p>
+<ul>
+<li>开闭原则：对扩展开放，对修改关系。接口和抽象类，增加派生类即可。 </li>
+<li>里氏代换原则：子类继承父类的方法，尽量不要改变父类方法的功能。</li>
+<li>依赖倒转原则：高层模块不依赖于低层模块，两者应该依赖其抽象，抽象不应该依赖细节，细节应该依抽象。具体实现可以参考泛型的思想。</li>
+<li>接口隔离原则：最小化依赖。一个类对另一个类的依赖应该建立在最小的接口上。</li>
+<li>迪米特法则：最小知识原则，不跟”陌生人”说话，降低耦合度。与当前对象存在关联、聚合、组合关系，可直接访问的。</li>
+<li>合成复用原则：尽量先试用组合或者聚合等关联关系实现，其次才考虑继承关系来实现。继承为白盒复用，合成复用为黑盒复用。</li>
+</ul>
+<p><strong>UML图</strong>-统一建模语言</p>
+<p>定义了用例图、类图、对象图、状态图、活动图、时序图、协作图、构件图、部署图等9种图</p>
+<p>类图：field&#x2F;method</p>
+<p><code>+</code>：表示public</p>
+<p><code>-</code>：表示private</p>
+<p><code>#</code>：表示protected</p>
+<p>属性完整表示方式：可见性 名称 ： 类型 [ &#x3D; 缺省值]</p>
+<p>方法完整表示方式：可见性 名称：（参数列表）[：返回类型]</p>
+<p>备注：中括号里面的内容为可选</p>
+<p><strong>类与类之间的关系</strong>：</p>
+<p>关联关系一般分为：<code>一般关联关系</code>、<code>聚合关系</code>、<code>组合关系</code></p>
+<p><code>一般关联关系</code>又可以分为：单向关联、双向关联、自关联</p>
+<ul>
+<li>关联关系<ul>
+<li>单向关联：带箭头的实线</li>
+<li>双向关联：不带箭头的实线</li>
+<li>自关联：带有箭头且指向自身的实线</li>
+</ul>
+</li>
+</ul>
+<p><code>聚合关联关系</code>：是强关联关系，是整体和部分之间的关系。聚合关系也是通过成员对象来实现的，成员对象是整体对象的一部分，成员对象可以脱离整体对象而独立存在。<code>空心菱形的实线表示，菱形指向整体</code>。例如：学校和老师的关系。</p>
+<p><code>组合关系</code>：也是整体和部分的关系，但它是一种更强烈的聚合关系。整体对象可以控制部分对象的生命周期，一旦整体对象不存在，部分对象也不存在，部分对象不能脱离整体而存在。<code>实心菱形的实线表示，菱形指向整体</code>。例如：头和嘴的关系。</p>
+<p><code>依赖关系</code>：它是耦合度最弱的关联关系，是临时性的关系。<code>带箭头的虚线表示，箭头从使用类指向被依赖的类</code>。例如：人开车，其中人和汽车的关系。</p>
+<p><code>继承关系</code>：继承关系(泛化关系)是对象之间耦合度最大的一种关系，表示一般与特殊的关系，是父类与子类的关系，是一种继承关系。<code>空心三角箭头的实线表示，箭头从子类指向父类</code>。例如：父亲和儿子。</p>
+<p><code>实现关系</code>：实现类实现了接口中所声明的所有抽象方法。<code>带空心三角箭头的虚线表示，箭头从实现类指向接口</code>。例如：交通工具与汽车的关系。</p>
+<h2 id="2-创建型模式（5种）"><a href="#2-创建型模式（5种）" class="headerlink" title="2. 创建型模式（5种）"></a><strong>2. 创建型模式（5种）</strong></h2><p>实现创建和使用分离。</p>
+<h3 id="2-1-单例模式"><a href="#2-1-单例模式" class="headerlink" title="2.1 单例模式"></a><strong>2.1 单例模式</strong></h3><p>singleton pattern</p>
+<p>分为两种：</p>
+<ul>
+<li><p><code>饿汉式</code>：类加载就会导致该单例对象被创建</p>
+</li>
+<li><p><code>懒汉式</code>：类加载不会导致该单例对象被创建，而是首次使用该对象时会被创建</p>
+</li>
+</ul>
+<p><code>//饿汉式-静态变量创建的对象-方式1</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//私有构造方法</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//在成员位置创建该类的对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Singleton</span> <span class="variable">instance</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//对外提供静态方法获取该对象</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>饿汉式-在静态代码块中创建该类对象-方式2</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//私有构造方法</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//对外提供静态方法获取该对象</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>饿汉式-枚举方式-方式3</code></p>
+<p>枚举类实现单例模式是极力推荐的单例实现方式，因为枚举类型是线程安全的，并且只会装载一次，设计者充分利用了枚举的这个特性来实现单例模式，枚举的写法非常简单，而且枚举类型是所用单例实现中唯一一种不会被破坏的单例实现模式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">Singleton</span>&#123;</span><br><span class="line">  INSTANCE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>懒汉式-线程不安全-方式1</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//私有构造方法</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//在成员位置创建该类的对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//对外提供静态方法获取该对象</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(instance == <span class="literal">null</span>)&#123;</span><br><span class="line">      instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>懒汉式-线程安全-方式2</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//私有构造方法</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//在成员位置创建该类的对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//对外提供静态方法获取该对象</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(instance == <span class="literal">null</span>)&#123;</span><br><span class="line">      instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>懒汉式-双重检查锁-方式3</code></p>
+<p>方式2中加锁操作虽然线程安全，但是也有性能问题，因为绝大多数的操作是读操作，而读操作本身就是线程安全的，没必要去加锁。所以，没有必要让每个线程必须持有锁才能调用getInstance。需要调整加锁的时机，由此产生下面双重检查锁的方式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//私有构造方法</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//在成员位置创建该类的对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//对外提供静态方法获取该对象</span></span><br><span class="line">  <span class="comment">//volatile解决多线程中空指针问题(JVM在实例化对象的时候会进行优化和指令重排序操作，使用volatile保证可见性和有序性)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第一次判断，如果instance的值不为null，不需要抢占锁，直接返回对象</span></span><br><span class="line">    <span class="keyword">if</span>(instance == <span class="literal">null</span>)&#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (Singleton.class)&#123;</span><br><span class="line">        <span class="comment">//第二次判断</span></span><br><span class="line">        <span class="keyword">if</span>(instance == <span class="literal">null</span>)&#123;</span><br><span class="line">          instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><code>懒汉式-静态内部类-方式4</code></p>
+<p>静态内部类单例模式中实例由内部类创建，由于JVM中加载外部类的过程中，是不会有加载静态内部类的，只有内部类的属性&#x2F;方法被调用才会被加载，并初始化其静态属性。静态属性由于被static修饰，保证只被实例化一次，并且能严格保证实例化顺序。</p>
+<p>静态内部类单例模式是一种优秀的单例模式，是开源项目中比较常用的一种单例模式，在没有加任何锁的情况下，保证了多线程下的安全，并且没有任何性能影响和空间的浪费。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//私有构造方法</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//在成员位置创建该类的对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">SingletonHolder</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Singleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//对外提供静态方法获取该对象</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> SingletonHolder.INSTANCE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>存在的问题</p>
+<p>破坏单例模式：使用上面的单例类可以创建多个对象，枚举方式除外。有两种方式，分别是序列化和反射。 </p>
+<p>通过<code>readResolve()</code>可以解决序列化破坏单例模式的问题。 </p>
+<p>通过在私有构造方法中添加代码可以解决破坏单例模式的问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//私有构造方法</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//反射破坏单例模式需要添加的代码</span></span><br><span class="line">    <span class="keyword">if</span>(instance !=<span class="literal">null</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//在成员位置创建该类的对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//对外提供静态方法获取该对象</span></span><br><span class="line">  <span class="comment">//volatile解决多线程中空指针问题(JVM在实例化对象的时候会进行优化和指令重排序操作，使用volatile保证可见性和有序性)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第一次判断，如果instance的值不为null，不需要抢占锁，直接返回对象</span></span><br><span class="line">    <span class="keyword">if</span>(instance == <span class="literal">null</span>)&#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (Singleton.class)&#123;</span><br><span class="line">        <span class="comment">//第二次判断</span></span><br><span class="line">        <span class="keyword">if</span>(instance == <span class="literal">null</span>)&#123;</span><br><span class="line">          instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>JDK的源码解析-Runtime类</p>
+<p>Runtime类使用的就是单例设计模式。</p>
+<h3 id="2-2-工厂方法模式"><a href="#2-2-工厂方法模式" class="headerlink" title="2.2 工厂方法模式"></a><strong>2.2 工厂方法模式</strong></h3><p><strong>实际应用场景：</strong></p>
+<ul>
+<li>证券分类：股票（沪市（主板、科创板）、深市（主板、创业板）、京市（新三板、创新层））、债券（国债、公司债）、基金（公募基金、ETF基金）等都是证券，这里的证券就是抽象产品，而股票等就是具体产品。证券代码、证券价格等就是抽象工厂中应该定义的，具体工厂就是</li>
+</ul>
+<p>Coffee类  addSugar addMilk  抽象类</p>
+<p>美式咖啡、拿铁咖啡  实现类</p>
+<p>工厂模式最大的优点就是解耦。</p>
+<p>简单工厂模式，不是一种设计模式，反而像是一种编程习惯。</p>
+<p>静态工厂模式，不是一种设计模式，也只是一种编程习惯。</p>
+<p>针对上面的问题，我们可以使用<code>工厂方法模式</code>，完全遵循开闭原则。</p>
+<p>定义一个用于创建对象的接口，让子类决定石化哪个产品类对象。工厂方法使一个产品类的实例化延迟到其工厂的子类中。</p>
+<p>工厂方法模式：</p>
+<ul>
+<li>抽象工厂(Abstract Factory)：提供了创建产品的<code>接口</code>，调用者通过它访问具体的工厂方法来创建产品。-接口</li>
+<li>具体工厂(Concrete Factory)：主要是<code>实现抽象工厂中的抽象方法</code>，完成具体产品创建。</li>
+<li>抽象产品(Product)：定义了产品规范 ，描述了产品的主要特征和功能。</li>
+<li>具体产品(Concrete Product)：实现了抽象产品角色定义的接口，由具体工厂来创建，同具体工厂<code>一一对应</code>。</li>
+</ul>
+<p><img src="/image/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png" alt="工厂方法模式"></p>
+<p>优缺点：</p>
+<ul>
+<li>优点：<ul>
+<li>用户只需知道具体工厂的名称就可以得到所需要的产品，无需知道产品的具体创建过程。</li>
+<li>在系统增加新的产品时只需要添加具体产品类和对应的具体工厂类，无需对原工厂进行修改，满足开闭原则。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>每增加一个产品就要增加一个具体产品类和一个对应的具体工厂类，这增加了系统的复杂度。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-抽象工厂模式"><a href="#2-3-抽象工厂模式" class="headerlink" title="2.3 抽象工厂模式"></a><strong>2.3 抽象工厂模式</strong></h3><p>工厂方法模式只考虑生产<code>同级别产品</code>，但是在现实生活中许多工厂是综合性的工厂，能生产<code>多种类产品</code>。</p>
+<p>抽象工厂模式是一种为访问类提供一个创建一组<code>相关</code>或<code>相互依赖</code>对象的<code>接口</code>，且访问类无需指定所要产品的具体类就能得到同族的不同级别的产品的模式接口。</p>
+<p>抽象工厂模式是工厂方法模式的升级版，工厂方法模式只生产一个等级的产品，而抽象工厂模式可生产多个等级的产品。</p>
+<ul>
+<li>抽象工厂(Abstract Factory)：提供了创建产品的<code>接口</code>，它包含多个创建产品的方法，可以创建多个不同等级的产品。</li>
+<li>具体工厂(Concrete Factory)：主要是<code>实现抽象工厂中的多个抽象方法</code>，完成具体产品创建。</li>
+<li>抽象产品(Product)：定义了产品规范 ，描述了产品的主要特征和功能。抽象工厂模式有多个抽象产品。</li>
+<li>具体产品(Concrete Product)：实现了抽象产品角色定义的接口，由具体工厂来创建，同具体工厂之间是<code>多对一的关系</code>。</li>
+</ul>
+<p><img src="/image/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png" alt="抽象工厂模式"></p>
+<p>优缺点：</p>
+<ul>
+<li>优点：当一个产品族中多个对象被设计成在一起工作时，它能保证客户端始终只使用一个产品中的对象。</li>
+<li>缺点：当产品族中增加一个新的产品时，所有的工作类都要进行修改。</li>
+</ul>
+<p>应用场景：换肤，一整套一起换。颜色、字体、图标等。</p>
+<p>模式扩展</p>
+<p>简单工厂+配置文件接触耦合</p>
+<p>加载配置文件，获取配置文件中配置的全类名，并创建该类的对象进行存储</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CoffeeFactory</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//1.定义容器对象存储咖啡对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;String,Coffee&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,Coffee&gt;();</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//2.加载配置文件，只需要加载一次</span></span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="type">Properties</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">is</span> <span class="operator">=</span> CoffeeFactory.class.getClassLoader().getResourceAsStream(name:<span class="string">&quot;bean.propert.....&quot;</span>)</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        p.load(is);</span><br><span class="line">        Set&lt;Object&gt; keys = p.keySet();</span><br><span class="line">        <span class="keyword">for</span> (Object key:keys)&#123;</span><br><span class="line">          <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> p.getProperty((String) key);</span><br><span class="line">          <span class="comment">//通过反射技术创建对象</span></span><br><span class="line">          <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> Class.forName(className);</span><br><span class="line">          <span class="type">Coffee</span> <span class="variable">coffee</span> <span class="operator">=</span> (Coffee) clazz.newInstance();</span><br><span class="line">          <span class="comment">//将名称和对象存储到容器中</span></span><br><span class="line">          map.put((String)key,coffee);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//根据名称获取对象</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Coffee <span class="title function_">creatCoffee</span><span class="params">(String name)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.get(name);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JDK源码解析-Collection.iterator方法</p>
+<ul>
+<li>抽象工厂(Abstract Factory)：提供了创建产品的<code>接口</code>。Collection</li>
+<li>具体工厂(Concrete Factory)：主要是<code>实现抽象工厂中的多个抽象方法</code>，完成具体产品创建。ArrayList</li>
+<li>抽象产品(Product)：定义了产品规范 ，描述了产品的主要特征和功能。iterator </li>
+<li>具体产品(Concrete Product)：实现了抽象产品角色定义的接口，由具体工厂来创建。ArrayList$Iter</li>
+</ul>
+<p>Collection接口是抽象工厂类，ArrayList是具体的工厂类，Iterator接口是抽象商品类，ArrayList类中的Iter内部类是具体的商品类。</p>
+<p>抽象工厂类、抽象产品类 用的都是接口。</p>
+<p><img src="/image/ArrayList.png" alt="ArrayList"></p>
+<h3 id="2-4-原型模式"><a href="#2-4-原型模式" class="headerlink" title="2.4 原型模式"></a><strong>2.4 原型模式</strong></h3><p>用一个已经创建的实例作为原型，通过复制该原型对象来创建一个和该原型对象相同的新对象。</p>
+<p>抽象原型类：规定了具体原型对象必须实现的clone()方法。</p>
+<p>具体原型类：实现抽象原型类的clone()方法，它是可被复制的对象。</p>
+<p>访问类：使用具体原型类中的clone()方法来复制新的对象。</p>
+<h3 id="2-5-建造者模式"><a href="#2-5-建造者模式" class="headerlink" title="2.5 建造者模式"></a><strong>2.5 建造者模式</strong></h3><h2 id="3-结构型模式（7种）"><a href="#3-结构型模式（7种）" class="headerlink" title="3. 结构型模式（7种）"></a><strong>3. 结构型模式（7种）</strong></h2><p>结构型模式描述如何将类或对象按某种布局组成更大的结构。它分为<code>类结构性模式</code>和<code>对象结构型模式</code>。</p>
+<ul>
+<li><code>类结构型模式</code>采用<code>继承</code>机制来组织接口和类。例如：</li>
+<li><code>对象结构型模式</code>采用<code>组合</code>或<code>聚合</code>来组合对象。例如：代理模式、</li>
+</ul>
+<p>由于组合关系或聚合关系比继承关系耦合度低，满足<code>合成复用原则</code>，所以对象结构型模式比类结构型模式有更大的灵活性。</p>
+<h3 id="3-1-代理模式-Proxy"><a href="#3-1-代理模式-Proxy" class="headerlink" title="3.1 代理模式 Proxy"></a><strong>3.1 代理模式 Proxy</strong></h3><p>由于某些原因需要给某<code>对象</code>提供一个<code>代理</code>以控制该<code>对象</code>的访问。这时，访问对象不适合或者不能直接引用目标对象，代理对象作为访问对象和目标对象之间的中介。</p>
+<ul>
+<li>静态代理：编译期生成</li>
+<li>动态代理：运行时生成，JDK代理(接口代理)、CGLIB代理</li>
+</ul>
+<p>代理模式分为三种角色：</p>
+<ul>
+<li>抽象主题类(Subject)：通过接口或抽象类声明真实主题和代理对象实现的业务方法。</li>
+<li>真实主题类(Real Subject)：实现了抽象主题中的具体业务，是代理对象锁代表的真实对象，是最终要引用的对象。</li>
+<li>代理类(Proxy)：提供了与真实主题相同的接口，其内部含有对真实主题的引用，它可以访问、控制或扩展真实主题的功能。</li>
+</ul>
+<h3 id="3-2-适配器模式-Adapter"><a href="#3-2-适配器模式-Adapter" class="headerlink" title="3.2 适配器模式 Adapter"></a><strong>3.2 适配器模式 Adapter</strong></h3><p><strong>实际应用场景</strong>：</p>
+<ul>
+<li><code>实际项目中的引用，行情服务从一个服务商切换到另一个服务商，例如：行情数据、个股详情数据</code></li>
+</ul>
+<p><strong>定义</strong>：将一个类的接口转换成客户希望的另一个接口，使得原本由于接口不兼容而不能一起工作的哪些类能一起工作。</p>
+<p><strong>适配器模式</strong>分为<code>类适配器模式</code>和<code>对象适配器模式</code>：</p>
+<ul>
+<li><code>类适配器模式</code>：耦合度比比对象适配器高，较少使用。</li>
+<li><code>对象适配器模式</code>：使用较多。</li>
+</ul>
+<p><strong>适配器模式</strong>包含一下<strong>主要角色</strong>：</p>
+<ul>
+<li>目标（Target）接口：当前系统业务所期待的接口，它可以是抽象类或接口。</li>
+<li>适配者（Adaptee）类：它是被访问和适配的现存组件库中的组件接口。</li>
+<li>适配器（Adapter）类：它是一个转换器，通过继承或引用适配者的对象，把适配者接口转换成目标接口，让客户按目标接口的格式访问适配者。</li>
+</ul>
+<p>类适配器：</p>
+<p>违背了合成复用原则，类适配器是客户类有一个接口规范的情况下可用，反之不可用。</p>
+<p>对象适配器：对象适配器模式可采用将现有组件库中已经实现的组件引入适配器类中，该类同时实现当前系统的业务接口。  </p>
+<p>接口适配器：当不希望实现一个接口中的所有的方法时，可以创建一个抽象类Adapter，实现所有方法，而此时我们只需继承该抽象类即可。</p>
+<h3 id="3-3桥接模式"><a href="#3-3桥接模式" class="headerlink" title="3.3桥接模式"></a>3.3桥接模式</h3><h3 id="3-4-装饰者模式"><a href="#3-4-装饰者模式" class="headerlink" title="3.4 装饰者模式"></a>3.4 装饰者模式</h3><h3 id="3-5-外观模式"><a href="#3-5-外观模式" class="headerlink" title="3.5 外观模式"></a>3.5 外观模式</h3><h3 id="3-6享元模式"><a href="#3-6享元模式" class="headerlink" title="3.6享元模式"></a>3.6享元模式</h3><h3 id="3-7-组合模式"><a href="#3-7-组合模式" class="headerlink" title="3.7 组合模式"></a>3.7 组合模式</h3><h2 id="4-行为型模式（11种）"><a href="#4-行为型模式（11种）" class="headerlink" title="4. 行为型模式（11种）"></a>4. 行为型模式（11种）</h2><h3 id="4-1-模版方法模式"><a href="#4-1-模版方法模式" class="headerlink" title="4.1 模版方法模式"></a>4.1 模版方法模式</h3><h3 id="4-2-策略模式"><a href="#4-2-策略模式" class="headerlink" title="4.2 策略模式"></a>4.2 策略模式</h3><h3 id="4-3-命令模式"><a href="#4-3-命令模式" class="headerlink" title="4.3 命令模式"></a>4.3 命令模式</h3><h3 id="4-4-责任链模式"><a href="#4-4-责任链模式" class="headerlink" title="4.4 责任链模式"></a>4.4 责任链模式</h3><h3 id="4-5-状态模式"><a href="#4-5-状态模式" class="headerlink" title="4.5 状态模式"></a>4.5 状态模式</h3><h3 id="4-6-观察者模式"><a href="#4-6-观察者模式" class="headerlink" title="4.6 观察者模式"></a>4.6 观察者模式</h3><h3 id="4-7中介者模式"><a href="#4-7中介者模式" class="headerlink" title="4.7中介者模式"></a>4.7中介者模式</h3><h3 id="4-8-迭代器模式"><a href="#4-8-迭代器模式" class="headerlink" title="4.8 迭代器模式"></a>4.8 迭代器模式</h3><h3 id="4-9-访问者模式"><a href="#4-9-访问者模式" class="headerlink" title="4.9 访问者模式"></a>4.9 访问者模式</h3><h3 id="4-10-备忘录模式"><a href="#4-10-备忘录模式" class="headerlink" title="4.10 备忘录模式"></a>4.10 备忘录模式</h3><h3 id="4-11-解释器模式"><a href="#4-11-解释器模式" class="headerlink" title="4.11 解释器模式"></a>4.11 解释器模式</h3><h2 id="5-小结"><a href="#5-小结" class="headerlink" title="5. 小结"></a>5. 小结</h2></div><div class="article-licensing box"><div class="licensing-title"><p>设计模式</p><p><a href="http://taofei.tech/2021/02/22/设计模式/">http://taofei.tech/2021/02/22/设计模式/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>TaoFei</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-02-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-06-30</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><div class="notification is-danger">You forgot to set the <code>business</code> or <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.</div><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/03/10/vscode%E5%AE%9E%E7%94%A8%E5%B0%8F%E8%AE%B0/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">vscode实用小记</span></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="notification is-danger">You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.</div></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="TaoFei"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">TaoFei</p><p class="is-size-6 is-block">Senior Cross-Platform Frontend Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Hefei, Anhui, P.R.China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives/"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories/"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags/"><p class="title">0</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/mannerable" target="_blank" rel="me noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/mannerable"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li></ul></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-05-12T15:20:10.000Z">2025-05-12</time></p><p class="title"><a href="/2025/05/12/%E9%B8%BF%E8%92%99%E9%9D%A2%E8%AF%95/">鸿蒙面试笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-04T14:41:12.000Z">2022-12-04</time></p><p class="title"><a href="/2022/12/04/%E5%AE%9E%E7%94%A8%E5%B0%8F%E8%BD%AF%E4%BB%B6/">实用小软件</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-03-10T13:07:09.000Z">2021-03-10</time></p><p class="title"><a href="/2021/03/10/vscode%E5%AE%9E%E7%94%A8%E5%B0%8F%E8%AE%B0/">vscode实用小记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-02-22T14:23:11.000Z">2021-02-22</time></p><p class="title"><a href="/2021/02/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/05/"><span class="level-start"><span class="level-item">五月 2025</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">十二月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">三月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/02/"><span class="level-start"><span class="level-item">二月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><!--!--><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">订阅更新</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="订阅"></div></div></form></div></div></div><div class="card widget"><div class="card-content"><div class="notification is-danger">You need to set <code>client_id</code> and <code>slot_id</code> to show this AD unit. Please set it in <code>_config.yml</code>.</div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">follow.it</h3><form action="" method="post" target="_blank"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="订阅"></div></div></form></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/bitg.png" alt="The Bit Garden" height="28"></a><p class="is-size-7"><span>&copy; 2025 TaoFei</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2016 - 2025, TaoFei. All rights reserved.</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
